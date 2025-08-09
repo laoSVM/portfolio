@@ -22,10 +22,10 @@
     <link rel="stylesheet" href="css/main.css">
     
     <!-- Favicon -->
-    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
     
     <!-- Apple Touch Icon -->
-    <link rel="apple-touch-icon" href="images/favicon.svg">
+    <link rel="apple-touch-icon" href="assets/favicon.svg">
 </head>
 <body>
     <!-- Skip to main content for accessibility -->
@@ -36,7 +36,7 @@
         <div class="nav__container">
             <div class="nav__brand">
                 <a href="#home" class="nav__logo" aria-label="Go to homepage">
-                    <span class="nav__logo-text">Portfolio</span>
+                    <span class="nav__logo-text">Lance</span>
                 </a>
             </div>
             
@@ -100,8 +100,7 @@
                     
                     <div class="hero__visual">
                         <div class="hero__image-container">
-                            <div class="hero__image-bg" aria-hidden="true"></div>
-                            <img src="https://picsum.photos/400/400?random=1" alt="Professional headshot" class="hero__image" width="400" height="400" loading="eager">
+                            <img src="assets/business-presentation.svg" alt="Professional headshot" class="hero__image" width="600" height="600" loading="eager">
                         </div>
                     </div>
                 </div>
@@ -154,7 +153,7 @@
                     
                     <div class="about__image">
                         <div class="about__image-container">
-                            <img src="https://picsum.photos/500/600?random=2" alt="Working on a project" class="about__photo" width="500" height="600" loading="lazy">
+                            <img src="assets/Frame 12.svg" alt="Working on a project" class="about__photo" width="500" height="600" loading="lazy">
                         </div>
                     </div>
                 </div>
@@ -225,80 +224,140 @@
                 
                 <div class="projects__filters">
                     <button class="filter-btn filter-btn--active" data-filter="all" type="button">All</button>
-                    <button class="filter-btn" data-filter="web" type="button">Web Apps</button>
-                    <button class="filter-btn" data-filter="design" type="button">Design</button>
-                    <button class="filter-btn" data-filter="mobile" type="button">Mobile</button>
+                    <button class="filter-btn" data-filter="web" type="button">Data Science</button>
+                    <button class="filter-btn" data-filter="ml" type="button">Machine Learning</button>
+                    <button class="filter-btn" data-filter="sql" type="button">SQL/Database</button>
                 </div>
                 
                 <div class="projects__grid">
                     <article class="project-card" data-category="web">
                         <div class="project-card__image">
-                            <img src="https://picsum.photos/400/250?random=3" alt="E-commerce Dashboard" width="400" height="250" loading="lazy">
+                            <img src="https://github.com/laoSVM/2022-Travelers-Insurance-Modeling/blob/main/Image/new%20car.png?raw=true" alt="Travelers Auto Quote Conversion" width="400" height="250" loading="lazy">
                             <div class="project-card__overlay">
                                 <div class="project-card__actions">
-                                    <a href="#" class="btn btn--small" aria-label="View live demo">Demo</a>
-                                    <a href="#" class="btn btn--small btn--secondary" aria-label="View source code">Code</a>
+                                    <a href="https://github.com/laoSVM/2022-Travelers-Insurance-Modeling" class="btn btn--small btn--project" aria-label="View source code">View</a>
                                 </div>
                             </div>
                         </div>
                         <div class="project-card__content">
-                            <h3 class="project-card__title">E-commerce Dashboard</h3>
+                            <h3 class="project-card__title">Travelers - Auto Quote Conversion</h3>
                             <p class="project-card__description">
-                                Modern admin dashboard with real-time analytics, 
-                                inventory management, and responsive design.
+                                Data science project that covers predictive modeling and BI dashboard.
                             </p>
                             <div class="project-card__tags">
-                                <span class="tag">React</span>
-                                <span class="tag">TypeScript</span>
-                                <span class="tag">Chart.js</span>
+                                <span class="tag">Data Science</span>
+                                <span class="tag">Predictive Modeling</span>
+                                <span class="tag">BI Dashboard</span>
                             </div>
                         </div>
                     </article>
                     
-                    <article class="project-card" data-category="design">
+                    <article class="project-card" data-category="web">
                         <div class="project-card__image">
-                            <img src="https://picsum.photos/400/250?random=4" alt="Creative Portfolio" width="400" height="250" loading="lazy">
+                            <img src="https://github.com/laoSVM/2022-Better-Working-World-Data-Challenge/blob/main/Global%20Semifinalist.jpg?raw=true" alt="EY Local Frog Discovery" width="400" height="250" loading="lazy">
                             <div class="project-card__overlay">
                                 <div class="project-card__actions">
-                                    <a href="#" class="btn btn--small" aria-label="View live demo">Demo</a>
-                                    <a href="#" class="btn btn--small btn--secondary" aria-label="View source code">Code</a>
+                                    <a href="https://github.com/laoSVM/2022-Better-Working-World-Data-Challenge/blob/main/Final%20Deliverable.ipynb" class="btn btn--small btn--project" aria-label="View source code">View</a>
                                 </div>
                             </div>
                         </div>
                         <div class="project-card__content">
-                            <h3 class="project-card__title">Creative Portfolio</h3>
+                            <h3 class="project-card__title">EY - Local Frog Discovery</h3>
                             <p class="project-card__description">
-                                Interactive portfolio website with advanced animations, 
-                                particle effects, and smooth transitions.
+                                Using climate data queried from Microsoft Planetary Computer API to protect species diversification.
                             </p>
                             <div class="project-card__tags">
-                                <span class="tag">Vue.js</span>
-                                <span class="tag">GSAP</span>
-                                <span class="tag">Three.js</span>
+                                <span class="tag">Python</span>
+                                <span class="tag">API Integration</span>
+                                <span class="tag">Climate Data</span>
                             </div>
                         </div>
                     </article>
                     
-                    <article class="project-card" data-category="mobile">
+                    <article class="project-card" data-category="ml">
                         <div class="project-card__image">
-                            <img src="https://picsum.photos/400/250?random=5" alt="Task Management App" width="400" height="250" loading="lazy">
+                            <img src="https://github.com/laoSVM/Texas-Energy-Demand-Forecasting/blob/main/Clean%20Energy.jpg?raw=true" alt="Texas Energy Demand Forecasting" width="400" height="250" loading="lazy">
                             <div class="project-card__overlay">
                                 <div class="project-card__actions">
-                                    <a href="#" class="btn btn--small" aria-label="View live demo">Demo</a>
-                                    <a href="#" class="btn btn--small btn--secondary" aria-label="View source code">Code</a>
+                                    <a href="https://github.com/laoSVM/Texas-Energy-Demand-Forecasting/blob/main/Project_RNN.ipynb" class="btn btn--small btn--project" aria-label="View source code">View</a>
                                 </div>
                             </div>
                         </div>
                         <div class="project-card__content">
-                            <h3 class="project-card__title">Task Management App</h3>
+                            <h3 class="project-card__title">Texas Energy Demand Forecasting</h3>
                             <p class="project-card__description">
-                                Progressive web app with offline capabilities, 
-                                drag-and-drop functionality, and team collaboration.
+                                Applied LSTM on a time series forecasting problem.
                             </p>
                             <div class="project-card__tags">
-                                <span class="tag">PWA</span>
-                                <span class="tag">JavaScript</span>
-                                <span class="tag">IndexedDB</span>
+                                <span class="tag">LSTM</span>
+                                <span class="tag">Time Series</span>
+                                <span class="tag">Deep Learning</span>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <article class="project-card" data-category="ml">
+                        <div class="project-card__image">
+                            <img src="https://github.com/laoSVM/Guitar-Type-Detection-Using-CNNs/blob/main/2_WithVGG16_Model.png?raw=true" alt="Guitar Type Identification" width="400" height="250" loading="lazy">
+                            <div class="project-card__overlay">
+                                <div class="project-card__actions">
+                                    <a href="https://github.com/laoSVM/Guitar-Type-Detection-Using-CNNs/blob/main/Project_CNN.ipynb" class="btn btn--small btn--project" aria-label="View source code">View</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-card__content">
+                            <h3 class="project-card__title">Guitar Type Identification</h3>
+                            <p class="project-card__description">
+                                Collected images through Google using web scraping. Trained CNN with VGG16 to identify different guitars.
+                            </p>
+                            <div class="project-card__tags">
+                                <span class="tag">CNN</span>
+                                <span class="tag">VGG16</span>
+                                <span class="tag">Web Scraping</span>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <article class="project-card" data-category="sql">
+                        <div class="project-card__image">
+                            <img src="https://github.com/laoSVM/POTOO-SQL/blob/main/cover.jpg?raw=true" alt="POTOO SQL Project" width="400" height="250" loading="lazy">
+                            <div class="project-card__overlay">
+                                <div class="project-card__actions">
+                                    <a href="https://github.com/laoSVM/POTOO-SQL/blob/main/README.md" class="btn btn--small btn--project" aria-label="View source code">View</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-card__content">
+                            <h3 class="project-card__title">POTOO</h3>
+                            <p class="project-card__description">
+                                We focused on improving inventory visibility for the company using SQL.
+                            </p>
+                            <div class="project-card__tags">
+                                <span class="tag">SQL</span>
+                                <span class="tag">Data Analysis</span>
+                                <span class="tag">Inventory Management</span>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <article class="project-card" data-category="sql">
+                        <div class="project-card__image">
+                            <img src="https://github.com/laoSVM/Business-Tickets-System/blob/main/ERD.png?raw=true" alt="Business Tickets System" width="400" height="250" loading="lazy">
+                            <div class="project-card__overlay">
+                                <div class="project-card__actions">
+                                    <a href="https://github.com/laoSVM/Business-Tickets-System" class="btn btn--small btn--project" aria-label="View source code">View</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-card__content">
+                            <h3 class="project-card__title">Business Tickets System</h3>
+                            <p class="project-card__description">
+                                A SQL project from creating schema to generating report.
+                            </p>
+                            <div class="project-card__tags">
+                                <span class="tag">SQL</span>
+                                <span class="tag">Database Design</span>
+                                <span class="tag">Schema</span>
                             </div>
                         </div>
                     </article>

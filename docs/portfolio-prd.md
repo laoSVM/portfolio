@@ -212,7 +212,7 @@ portfolio/
 │   ├── main.js
 │   ├── modules/
 │   └── utils/
-├── images/
+├── assets/
 ├── fonts/
 └── docs/
     └── portfolio-prd.md

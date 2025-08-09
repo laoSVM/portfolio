@@ -24,7 +24,7 @@ portfolio/
 ├── index.html     # Main HTML file
 ├── css/main.css   # Styles
 ├── js/main.js     # JavaScript
-└── images/        # Assets
+└── assets/        # Assets
 ```
 
 ## Customization
