@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lance | Creative Frontend Developer</title>
+    <meta name="description" content="Lance - Creative frontend developer specializing in modern web technologies, interactive animations, and pixel-perfect designs.">
+    <meta name="author" content="Lance">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="#">
+    <meta property="og:title" content="Lance | Creative Frontend Developer">
+    <meta property="og:description" content="Lance - Creative frontend developer specializing in modern web technologies, interactive animations, and pixel-perfect designs.">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Lance | Creative Frontend Developer">
+    <meta property="twitter:description" content="Lance - Creative frontend developer specializing in modern web technologies, interactive animations, and pixel-perfect designs.">
+    
+    <!-- Stylesheets -->
+    <link rel="stylesheet" href="css/main.css">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+    
+    <!-- Apple Touch Icon -->
+    <link rel="apple-touch-icon" href="images/favicon.svg">
+</head>
+<body>
+    <!-- Skip to main content for accessibility -->
+    <a href="#main" class="skip-link">Skip to main content</a>
+    
+    <!-- Navigation -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+        <div class="nav__container">
+            <div class="nav__brand">
+                <a href="#home" class="nav__logo" aria-label="Go to homepage">
+                    <span class="nav__logo-text">Portfolio</span>
+                </a>
+            </div>
+            
+            <ul class="nav__menu" role="menubar">
+                <li class="nav__item" role="none">
+                    <a href="#home" class="nav__link" role="menuitem" data-section="home">Home</a>
+                </li>
+                <li class="nav__item" role="none">
+                    <a href="#about" class="nav__link" role="menuitem" data-section="about">About</a>
+                </li>
+                <li class="nav__item" role="none">
+                    <a href="#experience" class="nav__link" role="menuitem" data-section="experience">Experience</a>
+                </li>
+                <li class="nav__item" role="none">
+                    <a href="#projects" class="nav__link" role="menuitem" data-section="projects">Projects</a>
+                </li>
+                <li class="nav__item" role="none">
+                    <a href="#skills" class="nav__link" role="menuitem" data-section="skills">Skills</a>
+                </li>
+                <li class="nav__item" role="none">
+                    <a href="#contact" class="nav__link" role="menuitem" data-section="contact">Contact</a>
+                </li>
+            </ul>
+            
+            <div class="nav__controls">
+                <button class="nav__toggle" aria-label="Toggle navigation menu" aria-expanded="false" type="button">
+                    <span class="nav__hamburger"></span>
+                    <span class="nav__hamburger"></span>
+                    <span class="nav__hamburger"></span>
+                </button>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main id="main" class="main">
+        <!-- Hero Section -->
+        <section id="home" class="hero" aria-label="Introduction">
+            <div class="hero__background">
+                <canvas id="heroCanvas" class="hero__canvas" aria-hidden="true"></canvas>
+                <div class="hero__lines" aria-hidden="true"></div>
+            </div>
+            
+            <div class="hero__container">
+                <div class="hero__content">
+                    <div class="hero__text">
+                        <h1 class="hero__title">
+                            <span class="hero__title-line">Creative</span>
+                            <span class="hero__title-line">Frontend</span>
+                            <span class="hero__title-line hero__title-line--accent">Developer</span>
+                        </h1>
+                        <p class="hero__subtitle">
+                            Crafting digital experiences through clean code, 
+                            innovative design, and pixel-perfect implementations.
+                        </p>
+                        <div class="hero__actions">
+                            <a href="#projects" class="btn btn--primary">View My Work</a>
+                            <a href="#contact" class="btn btn--secondary">Get In Touch</a>
+                        </div>
+                    </div>
+                    
+                    <div class="hero__visual">
+                        <div class="hero__image-container">
+                            <div class="hero__image-bg" aria-hidden="true"></div>
+                            <img src="https://picsum.photos/400/400?random=1" alt="Professional headshot" class="hero__image" width="400" height="400" loading="eager">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="hero__scroll-indicator" aria-hidden="true">
+                    <span class="hero__scroll-text">Scroll to explore</span>
+                    <div class="hero__scroll-arrow"></div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- About Section -->
+        <section id="about" class="about section" aria-label="About me">
+            <div class="container">
+                <header class="section__header">
+                    <h2 class="section__title">About Me</h2>
+                    <p class="section__subtitle">Passionate about creating meaningful digital experiences</p>
+                </header>
+                
+                <div class="about__content">
+                    <div class="about__text">
+                        <div class="about__story">
+                            <p>
+                                I'm a creative frontend developer with a passion for transforming ideas into 
+                                exceptional digital experiences. With expertise in modern web technologies, 
+                                I specialize in creating interactive, accessible, and performant websites.
+                            </p>
+                            <p>
+                                My approach combines technical precision with creative problem-solving, 
+                                ensuring every project not only looks beautiful but also delivers outstanding 
+                                user experiences across all devices.
+                            </p>
+                        </div>
+                        
+                        <div class="about__highlights">
+                            <div class="highlight">
+                                <h3 class="highlight__title">5+</h3>
+                                <p class="highlight__text">Years Experience</p>
+                            </div>
+                            <div class="highlight">
+                                <h3 class="highlight__title">50+</h3>
+                                <p class="highlight__text">Projects Completed</p>
+                            </div>
+                            <div class="highlight">
+                                <h3 class="highlight__title">98%</h3>
+                                <p class="highlight__text">Client Satisfaction</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="about__image">
+                        <div class="about__image-container">
+                            <img src="https://picsum.photos/500/600?random=2" alt="Working on a project" class="about__photo" width="500" height="600" loading="lazy">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Experience Section -->
+        <section id="experience" class="experience section" aria-label="Work experience">
+            <div class="container">
+                <header class="section__header">
+                    <h2 class="section__title">Experience</h2>
+                    <p class="section__subtitle">Professional journey and key achievements</p>
+                </header>
+                
+                <div class="timeline">
+                    <article class="timeline__item">
+                        <div class="timeline__marker" aria-hidden="true"></div>
+                        <div class="timeline__content">
+                            <div class="timeline__date">2022 - Present</div>
+                            <h3 class="timeline__title">Senior Frontend Developer</h3>
+                            <h4 class="timeline__company">Tech Innovation Inc.</h4>
+                            <p class="timeline__description">
+                                Lead frontend development for enterprise web applications, 
+                                focusing on React, TypeScript, and modern build tools. 
+                                Improved application performance by 40% and led a team of 4 developers.
+                            </p>
+                        </div>
+                    </article>
+                    
+                    <article class="timeline__item">
+                        <div class="timeline__marker" aria-hidden="true"></div>
+                        <div class="timeline__content">
+                            <div class="timeline__date">2020 - 2022</div>
+                            <h3 class="timeline__title">Frontend Developer</h3>
+                            <h4 class="timeline__company">Digital Solutions Co.</h4>
+                            <p class="timeline__description">
+                                Developed responsive web applications using Vue.js and modern CSS. 
+                                Collaborated with UX designers to implement pixel-perfect designs 
+                                and improved user engagement by 35%.
+                            </p>
+                        </div>
+                    </article>
+                    
+                    <article class="timeline__item">
+                        <div class="timeline__marker" aria-hidden="true"></div>
+                        <div class="timeline__content">
+                            <div class="timeline__date">2019 - 2020</div>
+                            <h3 class="timeline__title">Junior Web Developer</h3>
+                            <h4 class="timeline__company">Creative Agency Ltd.</h4>
+                            <p class="timeline__description">
+                                Built custom WordPress themes and interactive websites for clients 
+                                across various industries. Focused on performance optimization 
+                                and SEO best practices.
+                            </p>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Projects Section -->
+        <section id="projects" class="projects section" aria-label="Portfolio projects">
+            <div class="container">
+                <header class="section__header">
+                    <h2 class="section__title">Featured Projects</h2>
+                    <p class="section__subtitle">A showcase of my latest work and creative solutions</p>
+                </header>
+                
+                <div class="projects__filters">
+                    <button class="filter-btn filter-btn--active" data-filter="all" type="button">All</button>
+                    <button class="filter-btn" data-filter="web" type="button">Web Apps</button>
+                    <button class="filter-btn" data-filter="design" type="button">Design</button>
+                    <button class="filter-btn" data-filter="mobile" type="button">Mobile</button>
+                </div>
+                
+                <div class="projects__grid">
+                    <article class="project-card" data-category="web">
+                        <div class="project-card__image">
+                            <img src="https://picsum.photos/400/250?random=3" alt="E-commerce Dashboard" width="400" height="250" loading="lazy">
+                            <div class="project-card__overlay">
+                                <div class="project-card__actions">
+                                    <a href="#" class="btn btn--small" aria-label="View live demo">Demo</a>
+                                    <a href="#" class="btn btn--small btn--secondary" aria-label="View source code">Code</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-card__content">
+                            <h3 class="project-card__title">E-commerce Dashboard</h3>
+                            <p class="project-card__description">
+                                Modern admin dashboard with real-time analytics, 
+                                inventory management, and responsive design.
+                            </p>
+                            <div class="project-card__tags">
+                                <span class="tag">React</span>
+                                <span class="tag">TypeScript</span>
+                                <span class="tag">Chart.js</span>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <article class="project-card" data-category="design">
+                        <div class="project-card__image">
+                            <img src="https://picsum.photos/400/250?random=4" alt="Creative Portfolio" width="400" height="250" loading="lazy">
+                            <div class="project-card__overlay">
+                                <div class="project-card__actions">
+                                    <a href="#" class="btn btn--small" aria-label="View live demo">Demo</a>
+                                    <a href="#" class="btn btn--small btn--secondary" aria-label="View source code">Code</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-card__content">
+                            <h3 class="project-card__title">Creative Portfolio</h3>
+                            <p class="project-card__description">
+                                Interactive portfolio website with advanced animations, 
+                                particle effects, and smooth transitions.
+                            </p>
+                            <div class="project-card__tags">
+                                <span class="tag">Vue.js</span>
+                                <span class="tag">GSAP</span>
+                                <span class="tag">Three.js</span>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <article class="project-card" data-category="mobile">
+                        <div class="project-card__image">
+                            <img src="https://picsum.photos/400/250?random=5" alt="Task Management App" width="400" height="250" loading="lazy">
+                            <div class="project-card__overlay">
+                                <div class="project-card__actions">
+                                    <a href="#" class="btn btn--small" aria-label="View live demo">Demo</a>
+                                    <a href="#" class="btn btn--small btn--secondary" aria-label="View source code">Code</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="project-card__content">
+                            <h3 class="project-card__title">Task Management App</h3>
+                            <p class="project-card__description">
+                                Progressive web app with offline capabilities, 
+                                drag-and-drop functionality, and team collaboration.
+                            </p>
+                            <div class="project-card__tags">
+                                <span class="tag">PWA</span>
+                                <span class="tag">JavaScript</span>
+                                <span class="tag">IndexedDB</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Skills Section -->
+        <section id="skills" class="skills section" aria-label="Technical skills">
+            <div class="container">
+                <header class="section__header">
+                    <h2 class="section__title">Skills & Expertise</h2>
+                    <p class="section__subtitle">Technologies and tools I work with</p>
+                </header>
+                
+                <div class="skills__content">
+                    <div class="skills__categories">
+                        <div class="skill-category">
+                            <h3 class="skill-category__title">Frontend</h3>
+                            <div class="skill-list">
+                                <div class="skill-item">
+                                    <span class="skill-item__name">JavaScript (ES6+)</span>
+                                    <div class="skill-item__bar">
+                                        <div class="skill-item__progress" data-skill="95"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <span class="skill-item__name">React / Next.js</span>
+                                    <div class="skill-item__bar">
+                                        <div class="skill-item__progress" data-skill="90"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <span class="skill-item__name">Vue.js / Nuxt.js</span>
+                                    <div class="skill-item__bar">
+                                        <div class="skill-item__progress" data-skill="85"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <span class="skill-item__name">CSS3 / Sass</span>
+                                    <div class="skill-item__bar">
+                                        <div class="skill-item__progress" data-skill="95"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-category">
+                            <h3 class="skill-category__title">Backend</h3>
+                            <div class="skill-list">
+                                <div class="skill-item">
+                                    <span class="skill-item__name">Node.js</span>
+                                    <div class="skill-item__bar">
+                                        <div class="skill-item__progress" data-skill="80"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <span class="skill-item__name">Python</span>
+                                    <div class="skill-item__bar">
+                                        <div class="skill-item__progress" data-skill="75"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <span class="skill-item__name">MongoDB</span>
+                                    <div class="skill-item__bar">
+                                        <div class="skill-item__progress" data-skill="70"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <span class="skill-item__name">PostgreSQL</span>
+                                    <div class="skill-item__bar">
+                                        <div class="skill-item__progress" data-skill="75"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="skill-category">
+                            <h3 class="skill-category__title">Tools</h3>
+                            <div class="skill-list">
+                                <div class="skill-item">
+                                    <span class="skill-item__name">Git / GitHub</span>
+                                    <div class="skill-item__bar">
+                                        <div class="skill-item__progress" data-skill="90"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <span class="skill-item__name">Webpack / Vite</span>
+                                    <div class="skill-item__bar">
+                                        <div class="skill-item__progress" data-skill="85"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <span class="skill-item__name">Docker</span>
+                                    <div class="skill-item__bar">
+                                        <div class="skill-item__progress" data-skill="70"></div>
+                                    </div>
+                                </div>
+                                <div class="skill-item">
+                                    <span class="skill-item__name">AWS / Vercel</span>
+                                    <div class="skill-item__bar">
+                                        <div class="skill-item__progress" data-skill="75"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Contact Section -->
+        <section id="contact" class="contact section" aria-label="Contact information">
+            <div class="container">
+                <header class="section__header">
+                    <h2 class="section__title">Let's Work Together</h2>
+                    <p class="section__subtitle">Ready to bring your ideas to life</p>
+                </header>
+                
+                <div class="contact__content">
+                    <div class="contact__info">
+                        <div class="contact__item">
+                            <h3 class="contact__item-title">Email</h3>
+                            <a href="mailto:hello@yourportfolio.com" class="contact__link">hello@yourportfolio.com</a>
+                        </div>
+                        <div class="contact__item">
+                            <h3 class="contact__item-title">Phone</h3>
+                            <a href="tel:+1234567890" class="contact__link">+1 (234) 567-890</a>
+                        </div>
+                        <div class="contact__item">
+                            <h3 class="contact__item-title">Location</h3>
+                            <span class="contact__text">San Francisco, CA</span>
+                        </div>
+                        
+                        <div class="social-links">
+                            <a href="#" class="social-link" aria-label="GitHub profile">
+                                <span class="social-link__icon" aria-hidden="true">GitHub</span>
+                            </a>
+                            <a href="#" class="social-link" aria-label="LinkedIn profile">
+                                <span class="social-link__icon" aria-hidden="true">LinkedIn</span>
+                            </a>
+                            <a href="#" class="social-link" aria-label="Twitter profile">
+                                <span class="social-link__icon" aria-hidden="true">Twitter</span>
+                            </a>
+                            <a href="#" class="social-link" aria-label="Dribbble profile">
+                                <span class="social-link__icon" aria-hidden="true">Dribbble</span>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <form class="contact__form" aria-label="Contact form">
+                        <div class="form-group">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" id="name" name="name" class="form-input" required aria-describedby="name-error">
+                            <div id="name-error" class="form-error" role="alert"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" id="email" name="email" class="form-input" required aria-describedby="email-error">
+                            <div id="email-error" class="form-error" role="alert"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="subject" class="form-label">Subject</label>
+                            <input type="text" id="subject" name="subject" class="form-input" required aria-describedby="subject-error">
+                            <div id="subject-error" class="form-error" role="alert"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message" class="form-label">Message</label>
+                            <textarea id="message" name="message" class="form-input form-input--textarea" rows="5" required aria-describedby="message-error"></textarea>
+                            <div id="message-error" class="form-error" role="alert"></div>
+                        </div>
+                        
+                        <button type="submit" class="btn btn--primary btn--full">
+                            <span class="btn__text">Send Message</span>
+                            <span class="btn__loading" aria-hidden="true">Sending...</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer__content">
+                <p class="footer__text">
+                    &copy; 2024 Portfolio. Crafted with passion and precision.
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Custom Cursor -->
+    <div class="cursor" aria-hidden="true">
+        <div class="cursor__circle"></div>
+    </div>
+    
+    <!-- Loading Screen -->
+    <div class="loading-screen" aria-hidden="true">
+        <div class="loading-screen__content">
+            <div class="loading-screen__logo">Lance</div>
+            <div class="loading-screen__progress">
+                <div class="loading-screen__bar"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- JavaScript -->
+    <script src="js/main.js"></script>
+</body>
+</html>
