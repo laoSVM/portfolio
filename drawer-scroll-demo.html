@@ -93,6 +93,11 @@
       justify-content: flex-start; /* horizontal alignment: left */
     }
 
+    .drawer-section#projects {
+      align-items: flex-start;    /* vertical alignment: top */
+      justify-content: flex-start; /* horizontal alignment: left */
+    }
+
     /* stacking order (later sections above earlier ones) and themed backgrounds */
     .drawer-section:nth-child(1){ z-index: 1; background: var(--background); }
     .drawer-section:nth-child(2){ z-index: 2; background: var(--surface); border-top-left-radius: var(--radius-3xl); border-top-right-radius: var(--radius-3xl); overflow: hidden; }
@@ -302,6 +307,166 @@
       object-fit: cover;
     }
 
+    /* Projects section specific styles */
+    .projects-header {
+      text-align: left;
+      max-width: 88vw;
+      margin-top: 12vh;
+    }
+
+    .projects-title {
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      line-height: 0.9;
+      margin-bottom: var(--space-lg);
+    }
+
+    .projects-description {
+      margin-bottom: var(--space-xl);
+      max-width: 60vw;
+    }
+
+    .projects-filters {
+      display: flex;
+      gap: var(--space-md);
+      margin-bottom: var(--space-xl);
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      color: var(--text-secondary);
+      padding: 0.6rem 1.2rem;
+      border-radius: var(--radius-lg);
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all var(--transition-base);
+      backdrop-filter: blur(10px);
+    }
+
+    .filter-btn:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: var(--primary);
+      color: var(--text-primary);
+      transform: translateY(-1px);
+    }
+
+    .filter-btn--active {
+      background: var(--primary);
+      border-color: var(--primary);
+      color: var(--white);
+    }
+
+    .filter-btn--active:hover {
+      background: var(--primary-dark);
+      border-color: var(--primary-dark);
+    }
+
+
+    .projects-container {
+      display: flex;
+      gap: var(--space-lg);
+      overflow-x: auto;
+      overflow-y: hidden;
+      padding: var(--space-md) 0 calc(var(--space-md) + 10px) 0;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+      /* Ensure container has proper width */
+      width: 100%;
+      /* Add momentum scrolling for iOS */
+      -webkit-overflow-scrolling: touch;
+      /* Hide scrollbar but keep functionality */
+      -ms-overflow-style: -ms-autohiding-scrollbar;
+      /* Add padding to show scrollbar space */
+      margin-bottom: 10px;
+    }
+
+
+    .project-card {
+      flex: 0 0 280px;
+      min-width: 280px;
+      max-width: 280px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(0, 0, 0, 0.3);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      backdrop-filter: blur(10px);
+      transition: transform var(--transition-base), box-shadow var(--transition-base);
+      min-height: 240px;
+      scroll-snap-align: start;
+      /* Ensure cards maintain their size */
+      flex-shrink: 0;
+    }
+
+    .project-card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .project-image {
+      height: 120px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform var(--transition-base);
+    }
+
+    .project-card:hover .project-image img {
+      transform: scale(1.05);
+    }
+
+    .project-info {
+      padding: var(--space-md);
+    }
+
+    .project-title {
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text-primary);
+      margin-bottom: var(--space-xs);
+      line-height: 1.2;
+    }
+
+    .project-card .project-info .project-description {
+      font-size: 1.0rem;
+      color: var(--text-secondary);
+      line-height: 1.3;
+      margin-bottom: var(--space-sm);
+    }
+
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+    }
+
+    .project-tag {
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--text-secondary);
+      padding: 0.15rem 0.4rem;
+      border-radius: var(--radius-sm);
+      font-size: 0.65rem;
+      font-weight: 500;
+      border: 1px solid rgba(0, 0, 0, 0.2);
+    }
+
     @media (max-width: 768px) {
       .nav-dots { right: 1rem; }
       .section-content { padding: 1.25rem; }
@@ -313,6 +478,11 @@
       .about-title { font-size: clamp(2.5rem, 12vw, 5rem); }
       .about-stats { flex-direction: column; gap: var(--space-md); }
       .stat-card { min-width: auto; }
+      
+      .projects-header { margin-left: 5vw; margin-top: 6vh; max-width: 90vw; }
+      .projects-title { font-size: clamp(2.5rem, 12vw, 5rem); }
+      .projects-description { max-width: 90vw; }
+      .project-card { flex: 0 0 250px; min-width: 250px; max-width: 250px; }
     }
   </style>
 </head>
@@ -347,7 +517,7 @@
     <div id="about" class="drawer-section" data-section="1">
       <div class="section-content">
         <div class="about-header">
-          <div class="about-title">About Me</div>
+          <div class="about-title">About Me /</div>
           <div class="about-description">
             <p>I'm a creative developer with a passion for transforming ideas into exceptional digital experiences. With expertise in modern web technologies, I specialize in creating interactive, accessible, and performant websites.</p>
             <p>My approach combines technical precision with creative problem-solving, ensuring every project not only looks beautiful but also delivers outstanding user experiences across all devices.</p>
@@ -377,15 +547,114 @@
       </div>
     </div>
 
-    <div id="experience" class="drawer-section" data-section="2">
+    <div id="projects" class="drawer-section" data-section="2">
       <div class="section-content">
-        <h1>Performance Matters</h1>
-        <p>Lightning-fast load times meet stunning visuals. Our solutions are optimized for speed without compromising on beauty.</p>
-        <a href="#" class="cta-button">See Results</a>
+        <div class="projects-header">
+          <div class="projects-title">Projects /</div>
+          
+          <div class="projects-filters">
+            <button class="filter-btn filter-btn--active" data-filter="all" type="button">All</button>
+            <button class="filter-btn" data-filter="web" type="button">Data Science</button>
+            <button class="filter-btn" data-filter="ml" type="button">Machine Learning</button>
+            <button class="filter-btn" data-filter="sql" type="button">SQL/Database</button>
+          </div>
+          
+          <div class="projects-container">
+            <div class="project-card" data-category="web">
+              <div class="project-image">
+                <img src="https://github.com/laoSVM/2022-Travelers-Insurance-Modeling/blob/main/Image/new%20car.png?raw=true" alt="Travelers Auto Quote Conversion" loading="lazy">
+              </div>
+              <div class="project-info">
+                <h3 class="project-title">Travelers - Auto Quote Conversion</h3>
+                <p class="project-description">Data science project that covers predictive modeling and BI dashboard.</p>
+                <div class="project-tags">
+                  <span class="project-tag">Data Science</span>
+                  <span class="project-tag">Predictive Modeling</span>
+                  <span class="project-tag">BI Dashboard</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="project-card" data-category="web">
+              <div class="project-image">
+                <img src="https://github.com/laoSVM/2022-Better-Working-World-Data-Challenge/blob/main/Global%20Semifinalist.jpg?raw=true" alt="EY Local Frog Discovery" loading="lazy">
+              </div>
+              <div class="project-info">
+                <h3 class="project-title">EY - Local Frog Discovery</h3>
+                <p class="project-description">Using climate data queried from Microsoft Planetary Computer API to protect species diversification.</p>
+                <div class="project-tags">
+                  <span class="project-tag">Python</span>
+                  <span class="project-tag">API Integration</span>
+                  <span class="project-tag">Climate Data</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="project-card" data-category="ml">
+              <div class="project-image">
+                <img src="https://github.com/laoSVM/Texas-Energy-Demand-Forecasting/blob/main/Clean%20Energy.jpg?raw=true" alt="Texas Energy Demand Forecasting" loading="lazy">
+              </div>
+              <div class="project-info">
+                <h3 class="project-title">Texas Energy Demand Forecasting</h3>
+                <p class="project-description">Applied LSTM on a time series forecasting problem.</p>
+                <div class="project-tags">
+                  <span class="project-tag">LSTM</span>
+                  <span class="project-tag">Time Series</span>
+                  <span class="project-tag">Deep Learning</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="project-card" data-category="ml">
+              <div class="project-image">
+                <img src="https://github.com/laoSVM/Guitar-Type-Detection-Using-CNNs/blob/main/2_WithVGG16_Model.png?raw=true" alt="Guitar Type Identification" loading="lazy">
+              </div>
+              <div class="project-info">
+                <h3 class="project-title">Guitar Type Identification</h3>
+                <p class="project-description">Collected images through Google using web scraping. Trained CNN with VGG16 to identify different guitars.</p>
+                <div class="project-tags">
+                  <span class="project-tag">CNN</span>
+                  <span class="project-tag">VGG16</span>
+                  <span class="project-tag">Web Scraping</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="project-card" data-category="sql">
+              <div class="project-image">
+                <img src="https://github.com/laoSVM/POTOO-SQL/blob/main/cover.jpg?raw=true" alt="POTOO SQL Project" loading="lazy">
+              </div>
+              <div class="project-info">
+                <h3 class="project-title">POTOO</h3>
+                <p class="project-description">We focused on improving inventory visibility for the company using SQL.</p>
+                <div class="project-tags">
+                  <span class="project-tag">SQL</span>
+                  <span class="project-tag">Data Analysis</span>
+                  <span class="project-tag">Inventory Management</span>
+                </div>
+              </div>
+            </div>
+            
+            <div class="project-card" data-category="sql">
+              <div class="project-image">
+                <img src="https://github.com/laoSVM/Business-Tickets-System/blob/main/ERD.png?raw=true" alt="Business Tickets System" loading="lazy">
+              </div>
+              <div class="project-info">
+                <h3 class="project-title">Business Tickets System</h3>
+                <p class="project-description">A SQL project from creating schema to generating report.</p>
+                <div class="project-tags">
+                  <span class="project-tag">SQL</span>
+                  <span class="project-tag">Database Design</span>
+                  <span class="project-tag">Schema</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div id="projects" class="drawer-section" data-section="3">
+    <div id="experience" class="drawer-section" data-section="3">
       <div class="section-content">
         <h1>Built to Scale</h1>
         <p>From startups to enterprises, our architecture grows with your ambitions. Robust, reliable, and ready for tomorrow.</p>
@@ -679,6 +948,39 @@
 
     initPositions();
     handleScroll();
+
+    // Project filtering functionality
+    function initProjectFilters() {
+      const filterButtons = document.querySelectorAll('.filter-btn');
+      const projectCards = document.querySelectorAll('.project-card');
+
+      filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          const filter = button.dataset.filter;
+          
+          // Update active button
+          filterButtons.forEach(btn => btn.classList.remove('filter-btn--active'));
+          button.classList.add('filter-btn--active');
+          
+          // Filter projects
+          projectCards.forEach(card => {
+            const category = card.dataset.category;
+            if (filter === 'all' || category === filter) {
+              card.style.display = 'block';
+              card.style.opacity = '1';
+              card.style.transform = 'scale(1)';
+            } else {
+              card.style.display = 'none';
+              card.style.opacity = '0';
+              card.style.transform = 'scale(0.9)';
+            }
+          });
+        });
+      });
+    }
+
+    // Initialize project filters
+    initProjectFilters();
   </script>
 </body>
 </html>
