@@ -23,8 +23,6 @@
       cursor: auto !important;
     }
 
-
-
     /* creates scrollable space */
     .page-container { height: 600vh; position: relative; }
 
@@ -82,8 +80,7 @@
       100% { transform: translate(50px, 50px); }
     }
 
-    .drawer-section.hero {
-      position: relative;
+    .drawer-section#hero {
       align-items: flex-start;    /* vertical alignment: top */
       justify-content: flex-start; /* horizontal alignment: left */
     }
@@ -94,6 +91,11 @@
     }
 
     .drawer-section#projects {
+      align-items: flex-start;    /* vertical alignment: top */
+      justify-content: flex-start; /* horizontal alignment: left */
+    }
+
+    .drawer-section#experience {
       align-items: flex-start;    /* vertical alignment: top */
       justify-content: flex-start; /* horizontal alignment: left */
     }
@@ -467,6 +469,49 @@
       border: 1px solid rgba(0, 0, 0, 0.2);
     }
 
+    /* Experience/Skills section specific styles */
+    .experience-header {
+      text-align: left;
+      max-width: 88vw;
+      margin-top: 12vh;
+    }
+
+    .experience-title {
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      line-height: 0.9;
+      margin-bottom: var(--space-xl);
+    }
+
+    .skills-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: var(--space-lg);
+      margin-top: var(--space-xl);
+    }
+
+    .skills-column h3 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: var(--space-sm);
+    }
+
+    .skills-column ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .skills-column li {
+      padding: var(--space-xs) 0;
+      color: var(--text-secondary);
+      font-size: 1rem;
+    }
+
     @media (max-width: 768px) {
       .nav-dots { right: 1rem; }
       .section-content { padding: 1.25rem; }
@@ -483,6 +528,10 @@
       .projects-title { font-size: clamp(2.5rem, 12vw, 5rem); }
       .projects-description { max-width: 90vw; }
       .project-card { flex: 0 0 250px; min-width: 250px; max-width: 250px; }
+      
+      .experience-header { margin-left: 5vw; margin-top: 10vh; max-width: 90vw; }
+      .experience-title { font-size: clamp(2.5rem, 12vw, 5rem); }
+      .skills-container { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: var(--space-md); }
     }
   </style>
 </head>
@@ -491,7 +540,7 @@
 
   <div class="sections-wrapper" id="sectionsWrapper">
 
-    <div id="hero" class="drawer-section drawer-section--has-bg hero" data-section="0">
+    <div id="hero" class="drawer-section drawer-section--has-bg" data-section="0">
       <!-- Background layer -->
       <div class="drawer-bg" aria-hidden="true">
         <canvas id="drawerHeroCanvas" class="drawer-hero-canvas"></canvas>
@@ -656,9 +705,51 @@
 
     <div id="experience" class="drawer-section" data-section="3">
       <div class="section-content">
-        <h1>Built to Scale</h1>
-        <p>From startups to enterprises, our architecture grows with your ambitions. Robust, reliable, and ready for tomorrow.</p>
-        <a href="#" class="cta-button">Start Building</a>
+        <div class="experience-header">
+          <div class="experience-title">Skills /</div>
+          <div class="skills-container">
+            <div class="skills-column">
+              <h3>Data Science</h3>
+              <ul>
+                <li>Python</li>
+                <li>R</li>
+                <li>Pandas</li>
+                <li>NumPy</li>
+                <li>Scikit-learn</li>
+              </ul>
+            </div>
+            <div class="skills-column">
+              <h3>Machine Learning</h3>
+              <ul>
+                <li>TensorFlow</li>
+                <li>PyTorch</li>
+                <li>Keras</li>
+                <li>LSTM</li>
+                <li>CNN</li>
+              </ul>
+            </div>
+            <div class="skills-column">
+              <h3>Database & Analytics</h3>
+              <ul>
+                <li>SQL</li>
+                <li>PostgreSQL</li>
+                <li>MongoDB</li>
+                <li>Tableau</li>
+                <li>Power BI</li>
+              </ul>
+            </div>
+            <div class="skills-column">
+              <h3>Development Tools</h3>
+              <ul>
+                <li>Git</li>
+                <li>Docker</li>
+                <li>AWS</li>
+                <li>Jupyter</li>
+                <li>VS Code</li>
+              </ul>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
