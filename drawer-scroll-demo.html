@@ -23,14 +23,7 @@
       cursor: auto !important;
     }
 
-    /* top progress bar (fix for missing element in reference) */
-    #progressBar {
-      position: fixed;
-      top: 0; left: 0;
-      width: 0; height: 3px;
-      background: var(--primary);
-      z-index: var(--z-sticky);
-    }
+
 
     /* creates scrollable space */
     .page-container { height: 600vh; position: relative; }
@@ -95,10 +88,15 @@
       justify-content: flex-start; /* horizontal alignment: left */
     }
 
+    .drawer-section#about {
+      align-items: flex-start;    /* vertical alignment: top */
+      justify-content: flex-start; /* horizontal alignment: left */
+    }
+
     /* stacking order (later sections above earlier ones) and themed backgrounds */
     .drawer-section:nth-child(1){ z-index: 1; background: var(--background); }
-    .drawer-section:nth-child(2){ z-index: 2; background: var(--accent); border-top-left-radius: var(--radius-3xl); border-top-right-radius: var(--radius-3xl); overflow: hidden; }
-    .drawer-section:nth-child(3){ z-index: 3; background: var(--surface); border-top-left-radius: var(--radius-3xl); border-top-right-radius: var(--radius-3xl); overflow: hidden; }
+    .drawer-section:nth-child(2){ z-index: 2; background: var(--surface); border-top-left-radius: var(--radius-3xl); border-top-right-radius: var(--radius-3xl); overflow: hidden; }
+    .drawer-section:nth-child(3){ z-index: 3; background: var(--accent); border-top-left-radius: var(--radius-3xl); border-top-right-radius: var(--radius-3xl); overflow: hidden; }
     .drawer-section:nth-child(4){ z-index: 4; background: var(--accent-light); border-top-left-radius: var(--radius-3xl); border-top-right-radius: var(--radius-3xl); overflow: hidden; }
     .drawer-section:nth-child(5){ z-index: 5; background: var(--background); border-top-left-radius: var(--radius-3xl); border-top-right-radius: var(--radius-3xl); overflow: hidden; }
 
@@ -213,20 +211,117 @@
       max-width: 60vw;
     }
     
+    /* About section specific styles */
+    .about-header {
+      text-align: left;
+      max-width: 88vw;
+      width: 70%;
+      margin-top: 12vh;
+    }
+
+    .about-title {
+      font-size: clamp(3.5rem, 10vw, 8rem);
+      font-weight: 800;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      color: var(--text-primary);
+      line-height: 0.9;
+      margin-bottom: var(--space-lg);
+    }
+
+    .about-description {
+      margin-bottom: var(--space-xl);
+    }
+
+    .about-description p {
+      font-size: clamp(1rem, 2vw, 1.25rem);
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: var(--space-md);
+    }
+
+    .about-stats {
+      display: flex;
+      gap: var(--space-xl);
+      margin-top: var(--space-xl);
+    }
+
+    .stat-card {
+      text-align: center;
+      padding: var(--space-lg) var(--space-md);
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      backdrop-filter: blur(10px);
+      transition: transform var(--transition-base), box-shadow var(--transition-base);
+      min-width: 120px;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .stat-number {
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: var(--space-xs);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: clamp(0.85rem, 1.5vw, 1rem);
+      color: var(--text-secondary);
+      font-weight: 500;
+      margin: 0;
+    }
+
+    .about-image {
+      position: absolute;
+      right: 8vw;
+      top: 50%;
+      transform: translateY(-50%);
+      margin-top: 6vh;
+      max-width: 25vw;
+      z-index: 1;
+    }
+
+    .about-image-container {
+      position: relative;
+      width: 100%;
+      max-width: 350px;
+      margin: 0 auto;
+    }
+
+    .about-photo {
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--radius-lg);
+      filter: drop-shadow(var(--shadow-lg));
+      object-fit: cover;
+    }
+
     @media (max-width: 768px) {
       .nav-dots { right: 1rem; }
       .section-content { padding: 1.25rem; }
       .hero-header { left: 5vw; top: 10vh; }
       .hero-headline { width: 86vw; font-size: clamp(3rem, 16vw, 10rem); }
+      
+      .about-header { margin-left: 5vw; margin-top: 10vh; max-width: 90vw; }
+      .about-image { position: static; transform: none; max-width: 100%; margin-top: var(--space-lg); }
+      .about-title { font-size: clamp(2.5rem, 12vw, 5rem); }
+      .about-stats { flex-direction: column; gap: var(--space-md); }
+      .stat-card { min-width: auto; }
     }
   </style>
 </head>
 <body>
-  <div id="progressBar"></div>
   <div class="page-container"></div>
 
   <div class="sections-wrapper" id="sectionsWrapper">
-    <div class="drawer-section drawer-section--has-bg hero" data-section="0">
+
+    <div id="hero" class="drawer-section drawer-section--has-bg hero" data-section="0">
       <!-- Background layer -->
       <div class="drawer-bg" aria-hidden="true">
         <canvas id="drawerHeroCanvas" class="drawer-hero-canvas"></canvas>
@@ -237,14 +332,10 @@
         <div class="nav-text">Portfolio</div>
         <div class="nav-links">
           <a href="https://github.com" class="nav-link">github</a>
-          <a href="#" class="nav-link">about</a>
+          <a href="" class="nav-link">about</a>
           <a href="#" class="nav-link">contact</a>
         </div>
       </div>
-      
-
-      
-      <!-- Content that fades on scroll -->
       <div class="section-content">
         <div class="hero-header">
           <div class="hero-headline">EXPERIENCE</div>
@@ -253,15 +344,40 @@
       </div>
     </div>
 
-    <div class="drawer-section" data-section="1">
+    <div id="about" class="drawer-section" data-section="1">
       <div class="section-content">
-        <h1>Crafted Experiences</h1>
-        <p>Every scroll reveals a new chapter. We build immersive digital experiences that captivate and convert your audience.</p>
-        <a href="#" class="cta-button">Learn How</a>
+        <div class="about-header">
+          <div class="about-title">About Me</div>
+          <div class="about-description">
+            <p>I'm a creative developer with a passion for transforming ideas into exceptional digital experiences. With expertise in modern web technologies, I specialize in creating interactive, accessible, and performant websites.</p>
+            <p>My approach combines technical precision with creative problem-solving, ensuring every project not only looks beautiful but also delivers outstanding user experiences across all devices.</p>
+          </div>
+          
+          <div class="about-stats">
+            <div class="stat-card">
+              <h3 class="stat-number">5+</h3>
+              <p class="stat-label">Years Experience</p>
+            </div>
+            <div class="stat-card">
+              <h3 class="stat-number">50+</h3>
+              <p class="stat-label">Projects Completed</p>
+            </div>
+            <div class="stat-card">
+              <h3 class="stat-number">98%</h3>
+              <p class="stat-label">Client Satisfaction</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="about-image">
+          <div class="about-image-container">
+            <img src="assets/business-presentation.svg" alt="Working on a project" class="about-photo" width="800" height="600" loading="lazy">
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="drawer-section" data-section="2">
+    <div id="experience" class="drawer-section" data-section="2">
       <div class="section-content">
         <h1>Performance Matters</h1>
         <p>Lightning-fast load times meet stunning visuals. Our solutions are optimized for speed without compromising on beauty.</p>
@@ -269,7 +385,7 @@
       </div>
     </div>
 
-    <div class="drawer-section" data-section="3">
+    <div id="projects" class="drawer-section" data-section="3">
       <div class="section-content">
         <h1>Built to Scale</h1>
         <p>From startups to enterprises, our architecture grows with your ambitions. Robust, reliable, and ready for tomorrow.</p>
@@ -277,7 +393,7 @@
       </div>
     </div>
 
-    <div class="drawer-section" data-section="4">
+    <div class="drawer-section" data-section="4" id="connect">
       <div class="section-content">
         <h1>Let's Connect</h1>
         <p>Ready to transform your digital presence? Let's create something extraordinary together.</p>
@@ -446,10 +562,12 @@
     let SECTION_HEIGHT = window.innerHeight * 1.2;
 
     // create nav dots
-    sections.forEach((s, i) => {
+    sections.forEach((section, i) => {
       const dot = document.createElement('div');
       dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
+      dot.dataset.sectionId = section.id; // Associate dot with section ID
       dot.addEventListener('click', () => {
+        // Use the section height calculation for smooth scrolling
         window.scrollTo({ top: i * SECTION_HEIGHT, behavior: 'smooth' });
       });
       navDotsContainer.appendChild(dot);
@@ -464,8 +582,8 @@
       const scrollProgress = maxScroll > 0 ? clamp(scrollTop / maxScroll, 0, 1) : 0;
       if (progressBar) progressBar.style.width = `${scrollProgress * 100}%`;
 
-      const currentSectionFloat = scrollTop / SECTION_HEIGHT;
-      navDots.forEach((dot, i) => dot.classList.toggle('active', i === Math.round(currentSectionFloat)));
+      // Update active nav dot
+      updateActiveNavDot();
 
       // Reset all contents to visible by default (we only fade specific previous content during slide)
       sections.forEach((s) => {
@@ -534,6 +652,18 @@
         }
         const c = s.querySelector('.section-content');
         if (c) c.style.opacity = '1';
+      });
+    }
+
+    // Function to update active nav dot based on scroll position
+    function updateActiveNavDot() {
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const currentSectionFloat = scrollTop / SECTION_HEIGHT;
+      const currentSectionIndex = Math.round(currentSectionFloat);
+      
+      // Update nav dots
+      navDots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentSectionIndex);
       });
     }
 
