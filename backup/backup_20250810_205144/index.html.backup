@@ -21,7 +21,7 @@
       <div class="hero-nav">
         <div class="nav-text">Portfolio</div>
         <div class="nav-links">
-          <a href="https://github.com/laoSVM/portfolio" class="nav-link">github</a>
+          <a href="https://github.com" class="nav-link">github</a>
           <a href="" class="nav-link">about</a>
           <a href="#" class="nav-link">contact</a>
         </div>
