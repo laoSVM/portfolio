@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Horizontal Scrollbar Gallery</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #000;
+            --accent-color: #ff3366;
+            --bg-color: #0a0a0a;
+            --text-color: #ffffff;
+            --scroll-thumb: #ffffff;
+            --scroll-track: rgba(255, 255, 255, 0.1);
+            --card-bg: #111111;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            padding: 2rem;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 4rem;
+            opacity: 0;
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .header h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #fff 0%, #ff3366 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.7;
+        }
+
+        /* Scroll Container */
+        .scroll-wrapper {
+            position: relative;
+            margin: 0 -2rem;
+            padding: 0 2rem;
+            opacity: 0;
+            animation: fadeIn 1s ease 0.3s forwards;
+        }
+
+        .scroll-container {
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-behavior: smooth;
+            padding: 2rem 0 3rem;
+            cursor: grab;
+            /* Hide default scrollbar */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .scroll-container::-webkit-scrollbar {
+            display: none;
+        }
+
+        .scroll-container.grabbing {
+            cursor: grabbing;
+        }
+
+        .scroll-content {
+            display: flex;
+            gap: 2rem;
+            padding: 0 1rem;
+            width: max-content;
+        }
+
+        /* Cards */
+        .card {
+            flex: 0 0 350px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(255, 51, 102, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(255, 51, 102, 0.3);
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 250px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-image::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, transparent, rgba(0, 0, 0, 0.3));
+        }
+
+        .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-description {
+            font-size: 0.9rem;
+            opacity: 0.7;
+            line-height: 1.6;
+        }
+
+        .card-tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            background: rgba(255, 51, 102, 0.1);
+            color: var(--accent-color);
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-top: 1rem;
+            border: 1px solid rgba(255, 51, 102, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover .card-tag {
+            background: var(--accent-color);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* Custom Scrollbar */
+        .custom-scrollbar {
+            position: relative;
+            height: 4px;
+            background: var(--scroll-track);
+            border-radius: 2px;
+            margin: 2rem auto 0;
+            max-width: 600px;
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .scrollbar-track {
+            position: absolute;
+            inset: 0;
+            background: var(--scroll-track);
+            border-radius: 2px;
+        }
+
+        .scrollbar-thumb {
+            position: absolute;
+            height: 100%;
+            background: var(--scroll-thumb);
+            border-radius: 2px;
+            cursor: grab;
+            transition: background 0.3s ease;
+            box-shadow: 0 0 10px rgba(255, 51, 102, 0.5);
+        }
+
+        .scrollbar-thumb:hover {
+            background: var(--accent-color);
+        }
+
+        .scrollbar-thumb.dragging {
+            cursor: grabbing;
+            background: var(--accent-color);
+        }
+
+        /* Progress Indicator */
+        .progress-indicator {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            opacity: 0.6;
+        }
+
+        .progress-current {
+            font-weight: 600;
+            color: var(--accent-color);
+            font-size: 1.1rem;
+        }
+
+        /* Navigation Buttons */
+        .nav-buttons {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            pointer-events: none;
+            padding: 0 1rem;
+            z-index: 10;
+        }
+
+        .nav-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            pointer-events: all;
+            transition: all 0.3s ease;
+            font-size: 1.2rem;
+        }
+
+        .nav-btn:hover {
+            background: var(--accent-color);
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(255, 51, 102, 0.5);
+        }
+
+        .nav-btn.disabled {
+            opacity: 0.3;
+            pointer-events: none;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .card {
+                flex: 0 0 280px;
+            }
+
+            .nav-buttons {
+                display: none;
+            }
+
+            .container {
+                padding: 1rem;
+            }
+
+            .scroll-wrapper {
+                margin: 0 -1rem;
+                padding: 0 1rem;
+            }
+        }
+
+        /* Smooth scroll snap */
+        .scroll-container {
+            scroll-snap-type: x mandatory;
+            scroll-padding: 1rem;
+        }
+
+        .card {
+            scroll-snap-align: start;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Portfolio Gallery</h1>
+            <p>Explore our featured projects with custom horizontal scrolling</p>
+        </div>
+
+        <div class="scroll-wrapper">
+            <div class="scroll-container" id="scrollContainer">
+                <div class="scroll-content">
+                    <!-- Cards -->
+                    <div class="card">
+                        <div class="card-image" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);"></div>
+                        <div class="card-content">
+                            <h3 class="card-title">Project Alpha</h3>
+                            <p class="card-description">A revolutionary design system that transformed user experience across multiple platforms.</p>
+                            <span class="card-tag">UI/UX Design</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);"></div>
+                        <div class="card-content">
+                            <h3 class="card-title">Brand Evolution</h3>
+                            <p class="card-description">Complete brand overhaul resulting in 300% increase in user engagement.</p>
+                            <span class="card-tag">Branding</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);"></div>
+                        <div class="card-content">
+                            <h3 class="card-title">Digital Platform</h3>
+                            <p class="card-description">Scalable design system enabling rapid deployment across global markets.</p>
+                            <span class="card-tag">Development</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);"></div>
+                        <div class="card-content">
+                            <h3 class="card-title">E-commerce Suite</h3>
+                            <p class="card-description">Conversion optimization that delivered 70% reduction in cart abandonment.</p>
+                            <span class="card-tag">Optimization</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);"></div>
+                        <div class="card-content">
+                            <h3 class="card-title">Mobile First</h3>
+                            <p class="card-description">Award-winning mobile application with over 1M active users.</p>
+                            <span class="card-tag">Mobile Design</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);"></div>
+                        <div class="card-content">
+                            <h3 class="card-title">Analytics Dashboard</h3>
+                            <p class="card-description">Real-time data visualization platform for enterprise clients.</p>
+                            <span class="card-tag">Data Viz</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);"></div>
+                        <div class="card-content">
+                            <h3 class="card-title">Social Platform</h3>
+                            <p class="card-description">Community-driven platform connecting millions of creators worldwide.</p>
+                            <span class="card-tag">Social</span>
+                        </div>
+                    </div>
+
+                    <div class="card">
+                        <div class="card-image" style="background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);"></div>
+                        <div class="card-content">
+                            <h3 class="card-title">Learning Hub</h3>
+                            <p class="card-description">Educational platform revolutionizing online learning experiences.</p>
+                            <span class="card-tag">EdTech</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="nav-buttons">
+                <button class="nav-btn" id="prevBtn">←</button>
+                <button class="nav-btn" id="nextBtn">→</button>
+            </div>
+
+            <!-- Custom Scrollbar -->
+            <div class="custom-scrollbar" id="customScrollbar">
+                <div class="scrollbar-track"></div>
+                <div class="scrollbar-thumb" id="scrollbarThumb"></div>
+            </div>
+
+            <!-- Progress Indicator -->
+            <div class="progress-indicator">
+                <span class="progress-current" id="currentIndex">1</span>
+                <span>/</span>
+                <span id="totalItems">8</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const scrollContainer = document.getElementById('scrollContainer');
+        const scrollbarThumb = document.getElementById('scrollbarThumb');
+        const customScrollbar = document.getElementById('customScrollbar');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const currentIndexEl = document.getElementById('currentIndex');
+        const cards = document.querySelectorAll('.card');
+
+        let isDraggingScrollbar = false;
+        let isDraggingContent = false;
+        let startX = 0;
+        let scrollLeft = 0;
+        let currentCard = 0;
+
+        // Update scrollbar thumb position
+        function updateScrollbar() {
+            const scrollPercentage = scrollContainer.scrollLeft / (scrollContainer.scrollWidth - scrollContainer.clientWidth);
+            const thumbWidth = (scrollContainer.clientWidth / scrollContainer.scrollWidth) * 100;
+            const thumbPosition = scrollPercentage * (100 - thumbWidth);
+            
+            scrollbarThumb.style.width = `${thumbWidth}%`;
+            scrollbarThumb.style.left = `${thumbPosition}%`;
+
+            // Update current card index
+            const cardWidth = cards[0].offsetWidth + 32; // card width + gap
+            currentCard = Math.round(scrollContainer.scrollLeft / cardWidth);
+            currentIndexEl.textContent = currentCard + 1;
+
+            // Update navigation buttons
+            prevBtn.classList.toggle('disabled', scrollContainer.scrollLeft <= 0);
+            nextBtn.classList.toggle('disabled', 
+                scrollContainer.scrollLeft >= scrollContainer.scrollWidth - scrollContainer.clientWidth - 10);
+        }
+
+        // Scroll to specific card
+        function scrollToCard(index) {
+            const cardWidth = cards[0].offsetWidth + 32;
+            scrollContainer.scrollLeft = index * cardWidth;
+        }
+
+        // Navigation buttons
+        prevBtn.addEventListener('click', () => {
+            if (currentCard > 0) {
+                scrollToCard(currentCard - 1);
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            if (currentCard < cards.length - 1) {
+                scrollToCard(currentCard + 1);
+            }
+        });
+
+        // Scrollbar dragging
+        scrollbarThumb.addEventListener('mousedown', (e) => {
+            isDraggingScrollbar = true;
+            scrollbarThumb.classList.add('dragging');
+            startX = e.clientX - scrollbarThumb.offsetLeft;
+            e.preventDefault();
+        });
+
+        // Content dragging
+        scrollContainer.addEventListener('mousedown', (e) => {
+            // Don't start drag if clicking on a card
+            if (e.target.closest('.card')) return;
+            
+            isDraggingContent = true;
+            scrollContainer.classList.add('grabbing');
+            startX = e.pageX - scrollContainer.offsetLeft;
+            scrollLeft = scrollContainer.scrollLeft;
+            e.preventDefault();
+        });
+
+        // Mouse move
+        document.addEventListener('mousemove', (e) => {
+            if (isDraggingScrollbar) {
+                e.preventDefault();
+                const x = e.clientX - customScrollbar.offsetLeft;
+                const walkPercentage = x / customScrollbar.offsetWidth;
+                const scrollPosition = walkPercentage * (scrollContainer.scrollWidth - scrollContainer.clientWidth);
+                scrollContainer.scrollLeft = scrollPosition;
+            }
+
+            if (isDraggingContent) {
+                e.preventDefault();
+                const x = e.pageX - scrollContainer.offsetLeft;
+                const walk = (x - startX) * 2;
+                scrollContainer.scrollLeft = scrollLeft - walk;
+            }
+        });
+
+        // Mouse up
+        document.addEventListener('mouseup', () => {
+            isDraggingScrollbar = false;
+            isDraggingContent = false;
+            scrollbarThumb.classList.remove('dragging');
+            scrollContainer.classList.remove('grabbing');
+        });
+
+        // Click on scrollbar track
+        customScrollbar.addEventListener('click', (e) => {
+            if (e.target === scrollbarThumb) return;
+            
+            const rect = customScrollbar.getBoundingClientRect();
+            const clickPosition = (e.clientX - rect.left) / rect.width;
+            const scrollPosition = clickPosition * (scrollContainer.scrollWidth - scrollContainer.clientWidth);
+            scrollContainer.scrollLeft = scrollPosition;
+        });
+
+        // Scroll event
+        scrollContainer.addEventListener('scroll', updateScrollbar);
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft' && currentCard > 0) {
+                scrollToCard(currentCard - 1);
+            } else if (e.key === 'ArrowRight' && currentCard < cards.length - 1) {
+                scrollToCard(currentCard + 1);
+            }
+        });
+
+        // Touch support for mobile
+        let touchStartX = 0;
+        let touchScrollLeft = 0;
+
+        scrollContainer.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].pageX;
+            touchScrollLeft = scrollContainer.scrollLeft;
+        });
+
+        scrollContainer.addEventListener('touchmove', (e) => {
+            const x = e.touches[0].pageX;
+            const walk = (touchStartX - x) * 2;
+            scrollContainer.scrollLeft = touchScrollLeft + walk;
+        });
+
+        // Mouse wheel horizontal scroll
+        scrollContainer.addEventListener('wheel', (e) => {
+            if (e.deltaY !== 0) {
+                e.preventDefault();
+                scrollContainer.scrollLeft += e.deltaY;
+            }
+        });
+
+        // Initialize
+        updateScrollbar();
+
+        // Resize handler
+        window.addEventListener('resize', updateScrollbar);
+    </script>
+</body>
+</html>

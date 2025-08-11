@@ -1,7 +1,6 @@
 ---
 name: clean-frontend-architect-reviewer
 description: Use this agent when you need a senior frontend developer to write, review, or refactor frontend code with emphasis on minimalist design, structural clarity, and self-documenting patterns.
-tools: Glob, Grep, LS, Read, WebFetch, TodoWrite, WebSearch, BashOutput, KillBash
 model: sonnet
 color: yellow
 ---

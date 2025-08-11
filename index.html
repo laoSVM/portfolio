@@ -22,8 +22,8 @@
         <div class="nav-text">Portfolio</div>
         <div class="nav-links">
           <a href="https://github.com/laoSVM/portfolio" class="nav-link">github</a>
-          <a href="" class="nav-link">about</a>
-          <a href="#" class="nav-link">contact</a>
+          <a href="#about" class="nav-link">about</a>
+          <a href="#connect" class="nav-link">contact</a>
         </div>
       </div>
       <div class="section-content">
@@ -81,7 +81,7 @@
             <button class="drawer-filter-btn" data-filter="sql" type="button">SQL/Database</button>
           </div>
           
-          <div class="projects-container">
+          <div class="projects-container" id="projectsContainer">
             <div class="drawer-project-card" data-category="web">
               <div class="drawer-project-image">
                 <img src="https://github.com/laoSVM/2022-Travelers-Insurance-Modeling/blob/main/Image/new%20car.png?raw=true" alt="Travelers Auto Quote Conversion" loading="lazy">
@@ -172,6 +172,12 @@
               </div>
             </div>
           </div>
+          
+          <!-- Custom Scrollbar for Projects -->
+          <div class="projects-scrollbar" id="projectsScrollbar" role="scrollbar" aria-orientation="horizontal" aria-controls="projects-container">
+            <div class="projects-scrollbar-track"></div>
+            <div class="projects-scrollbar-thumb" id="projectsScrollbarThumb" role="slider" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Projects scroll position" tabindex="0"></div>
+          </div>
         </div>
       </div>
     </div>
@@ -226,7 +232,7 @@
       </div>
     </div>
 
-    <div class="drawer-section" data-section="4" id="connect">
+    <div id="connect" class="drawer-section" data-section="4">
       <div class="section-content">
         <h1>Let's Connect</h1>
         <p>Ready to transform your digital presence? Let's create something extraordinary together.</p>

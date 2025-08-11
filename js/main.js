@@ -76,7 +76,7 @@ class CustomCursor {
   }
 
   setupHoverEffects() {
-    const hoverElements = document.querySelectorAll('a, button, .drawer-project-card, .drawer-filter-btn, .nav-dot');
+    const hoverElements = document.querySelectorAll('a, button, .drawer-project-card, .drawer-filter-btn, .nav-dot, .projects-scrollbar-thumb, .projects-scrollbar');
     
     hoverElements.forEach(element => {
       element.addEventListener('mouseenter', () => {
@@ -123,7 +123,7 @@ class DrawerScrollEffect {
       dot.className = 'nav-dot' + (i === 0 ? ' active' : '');
       dot.dataset.sectionId = section.id;
       dot.addEventListener('click', () => {
-        window.scrollTo({ top: i * this.SECTION_HEIGHT, behavior: 'smooth' });
+        this.scrollToSection(section.id);
       });
       this.navDotsContainer.appendChild(dot);
     });
@@ -137,6 +137,9 @@ class DrawerScrollEffect {
       this.initPositions();
       this.handleScroll();
     });
+    
+    // Handle anchor link navigation
+    this.setupAnchorLinkHandling();
   }
 
   handleScroll() {
@@ -228,6 +231,35 @@ class DrawerScrollEffect {
 
   clamp(v, a, b) {
     return Math.max(a, Math.min(b, v));
+  }
+
+  setupAnchorLinkHandling() {
+    // Handle anchor links in navigation
+    const anchorLinks = document.querySelectorAll('a[href^="#"]:not([href="#"])');
+    
+    anchorLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').substring(1);
+        this.scrollToSection(targetId);
+      });
+    });
+  }
+
+  scrollToSection(sectionId) {
+    const targetSection = document.getElementById(sectionId);
+    if (!targetSection) return;
+    
+    // Find the index of the target section
+    const sectionIndex = this.sections.findIndex(section => section.id === sectionId);
+    if (sectionIndex === -1) return;
+    
+    // Calculate scroll position based on section index and scroll smoothly
+    const scrollPosition = sectionIndex * this.SECTION_HEIGHT;
+    window.scrollTo({ 
+      top: scrollPosition, 
+      behavior: 'smooth' 
+    });
   }
 }
 
@@ -378,6 +410,251 @@ class DrawerParticleSystem {
 }
 
 // ==========================================================================
+// Custom Project Scrollbar
+// ==========================================================================
+
+class CustomProjectScrollbar {
+  constructor(containerSelector, scrollbarSelector) {
+    this.container = document.querySelector(containerSelector);
+    this.scrollbar = document.querySelector(scrollbarSelector);
+    this.thumb = document.querySelector(`${scrollbarSelector} .projects-scrollbar-thumb`);
+    
+    if (!this.container || !this.scrollbar || !this.thumb) {
+      return;
+    }
+    
+    this.isDraggingScrollbar = false;
+    this.isDraggingContent = false;
+    this.startX = 0;
+    this.scrollLeft = 0;
+    this.isMobile = window.innerWidth <= 768;
+    
+    this.init();
+  }
+  
+  init() {
+    this.bindEvents();
+    this.updateScrollbar();
+    
+    // Show scrollbar after initialization
+    requestAnimationFrame(() => {
+      this.scrollbar.classList.add('projects-scrollbar--visible');
+    });
+  }
+  
+  bindEvents() {
+    // Content scroll events
+    this.container.addEventListener('scroll', () => this.updateScrollbar(), { passive: true });
+    
+    // Scrollbar dragging
+    this.thumb.addEventListener('mousedown', (e) => this.startScrollbarDrag(e));
+    
+    // Content dragging (avoid interfering with project cards)
+    this.container.addEventListener('mousedown', (e) => this.startContentDrag(e));
+    
+    // Global mouse events
+    document.addEventListener('mousemove', (e) => this.handleMouseMove(e));
+    document.addEventListener('mouseup', () => this.endDrag());
+    
+    // Click on scrollbar track
+    this.scrollbar.addEventListener('click', (e) => this.handleScrollbarClick(e));
+    
+    // Touch support
+    if ('ontouchstart' in window) {
+      this.bindTouchEvents();
+    }
+    
+    // Mouse wheel horizontal scroll
+    this.container.addEventListener('wheel', (e) => this.handleWheel(e));
+    
+    // Keyboard navigation
+    this.thumb.addEventListener('keydown', (e) => this.handleKeydown(e));
+    
+    // Resize handler
+    window.addEventListener('resize', () => this.handleResize());
+  }
+  
+  updateScrollbar() {
+    if (this.container.scrollWidth <= this.container.clientWidth) {
+      this.scrollbar.style.opacity = '0';
+      return;
+    }
+    
+    const scrollPercentage = this.container.scrollLeft / 
+      (this.container.scrollWidth - this.container.clientWidth);
+    const thumbWidth = (this.container.clientWidth / this.container.scrollWidth) * 100;
+    const thumbPosition = scrollPercentage * (100 - thumbWidth);
+    
+    this.thumb.style.width = `${Math.max(thumbWidth, 10)}%`;
+    this.thumb.style.left = `${thumbPosition}%`;
+    
+    // Update ARIA values
+    const scrollPercent = Math.round(scrollPercentage * 100);
+    this.container.setAttribute('aria-valuenow', scrollPercent);
+    this.thumb.setAttribute('aria-valuenow', scrollPercent);
+    
+    // Show/hide scrollbar
+    this.scrollbar.classList.add('projects-scrollbar--visible');
+  }
+  
+  startScrollbarDrag(e) {
+    if (this.isMobile) return;
+    
+    this.isDraggingScrollbar = true;
+    this.thumb.classList.add('dragging');
+    this.startX = e.clientX - this.thumb.offsetLeft;
+    e.preventDefault();
+    e.stopPropagation();
+  }
+  
+  startContentDrag(e) {
+    if (this.isMobile) return;
+    
+    // Don't start drag if clicking on a project card or interactive element
+    if (e.target.closest('.drawer-project-card') || 
+        e.target.closest('button') || 
+        e.target.closest('a')) {
+      return;
+    }
+    
+    this.isDraggingContent = true;
+    this.container.classList.add('grabbing');
+    this.startX = e.pageX - this.container.offsetLeft;
+    this.scrollLeft = this.container.scrollLeft;
+    e.preventDefault();
+  }
+  
+  handleMouseMove(e) {
+    if (this.isDraggingScrollbar) {
+      e.preventDefault();
+      const rect = this.scrollbar.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const walkPercentage = Math.max(0, Math.min(1, x / rect.width));
+      const scrollPosition = walkPercentage * (this.container.scrollWidth - this.container.clientWidth);
+      this.container.scrollLeft = scrollPosition;
+    }
+    
+    if (this.isDraggingContent) {
+      e.preventDefault();
+      const x = e.pageX - this.container.offsetLeft;
+      const walk = (x - this.startX) * 2;
+      this.container.scrollLeft = this.scrollLeft - walk;
+    }
+  }
+  
+  endDrag() {
+    this.isDraggingScrollbar = false;
+    this.isDraggingContent = false;
+    this.thumb.classList.remove('dragging');
+    this.container.classList.remove('grabbing');
+  }
+  
+  handleScrollbarClick(e) {
+    if (e.target === this.thumb) return;
+    
+    const rect = this.scrollbar.getBoundingClientRect();
+    const clickPosition = (e.clientX - rect.left) / rect.width;
+    const scrollPosition = clickPosition * (this.container.scrollWidth - this.container.clientWidth);
+    
+    this.container.scrollTo({
+      left: scrollPosition,
+      behavior: 'smooth'
+    });
+  }
+  
+  bindTouchEvents() {
+    let touchStartX = 0;
+    let touchScrollLeft = 0;
+    
+    this.container.addEventListener('touchstart', (e) => {
+      touchStartX = e.touches[0].pageX;
+      touchScrollLeft = this.container.scrollLeft;
+    }, { passive: true });
+    
+    this.container.addEventListener('touchmove', (e) => {
+      const x = e.touches[0].pageX;
+      const walk = (touchStartX - x) * 1.5;
+      this.container.scrollLeft = touchScrollLeft + walk;
+    }, { passive: true });
+  }
+  
+  handleWheel(e) {
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+      e.preventDefault();
+      this.container.scrollLeft += e.deltaY;
+    }
+  }
+  
+  handleKeydown(e) {
+    const cardWidth = 280 + 32; // card width + gap from CSS
+    const currentCard = Math.round(this.container.scrollLeft / cardWidth);
+    const totalCards = this.container.querySelectorAll('.drawer-project-card').length;
+    
+    switch (e.key) {
+      case 'ArrowLeft':
+        if (currentCard > 0) {
+          this.container.scrollTo({
+            left: (currentCard - 1) * cardWidth,
+            behavior: 'smooth'
+          });
+        }
+        e.preventDefault();
+        break;
+      case 'ArrowRight':
+        if (currentCard < totalCards - 1) {
+          this.container.scrollTo({
+            left: (currentCard + 1) * cardWidth,
+            behavior: 'smooth'
+          });
+        }
+        e.preventDefault();
+        break;
+      case 'Home':
+        this.container.scrollTo({ left: 0, behavior: 'smooth' });
+        e.preventDefault();
+        break;
+      case 'End':
+        this.container.scrollTo({
+          left: this.container.scrollWidth - this.container.clientWidth,
+          behavior: 'smooth'
+        });
+        e.preventDefault();
+        break;
+    }
+  }
+  
+  handleResize() {
+    const wasMobile = this.isMobile;
+    this.isMobile = window.innerWidth <= 768;
+    
+    if (wasMobile !== this.isMobile) {
+      // Mobile state changed, update scrollbar visibility
+      if (this.isMobile) {
+        this.scrollbar.style.display = 'none';
+      } else {
+        this.scrollbar.style.display = '';
+        this.updateScrollbar();
+      }
+    } else if (!this.isMobile) {
+      this.updateScrollbar();
+    }
+  }
+  
+  destroy() {
+    // Clean up event listeners
+    this.container.removeEventListener('scroll', this.updateScrollbar);
+    this.thumb.removeEventListener('mousedown', this.startScrollbarDrag);
+    this.container.removeEventListener('mousedown', this.startContentDrag);
+    document.removeEventListener('mousemove', this.handleMouseMove);
+    document.removeEventListener('mouseup', this.endDrag);
+    this.scrollbar.removeEventListener('click', this.handleScrollbarClick);
+    this.container.removeEventListener('wheel', this.handleWheel);
+    this.thumb.removeEventListener('keydown', this.handleKeydown);
+    window.removeEventListener('resize', this.handleResize);
+  }
+}
+
+// ==========================================================================
 // Enhanced Project Filtering for Drawer Layout
 // ==========================================================================
 
@@ -453,6 +730,12 @@ class PortfolioApp {
       // Initialize drawer scroll components
       this.components.drawerScrollEffect = new DrawerScrollEffect();
       this.components.drawerProjectFilter = new DrawerProjectFilter();
+      
+      // Initialize custom project scrollbar
+      this.components.customProjectScrollbar = new CustomProjectScrollbar(
+        '#projectsContainer', 
+        '#projectsScrollbar'
+      );
       
       // Initialize drawer particle system
       const drawerCanvas = document.getElementById('drawerHeroCanvas');

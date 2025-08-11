@@ -389,7 +389,7 @@ a, button, input, textarea, select, [role="button"], [onclick], .project-card, .
 
 .drawer-section:nth-child(3){ 
   z-index: 3; 
-  background: var(--accent); 
+  background: var(--background); 
   border-top-left-radius: var(--radius-3xl); 
   border-top-right-radius: var(--radius-3xl); 
   overflow: hidden; 
@@ -734,11 +734,67 @@ a, button, input, textarea, select, [role="button"], [onclick], .project-card, .
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   scroll-snap-type: x mandatory;
-  scrollbar-width: thin;
-  scrollbar-color: var(--border) transparent;
   width: 100%;
-  -ms-overflow-style: -ms-autohiding-scrollbar;
-  margin-bottom: 10px;
+  margin-bottom: var(--space-lg);
+  
+  /* Hide native scrollbar */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.projects-container::-webkit-scrollbar {
+  display: none; /* Chrome/Safari/WebKit */
+}
+
+/* Custom scrollbar for projects */
+.projects-scrollbar {
+  position: relative;
+  height: 12px;
+  background: var(--border);
+  border-radius: 0;
+  margin: var(--space-sm) 0 var(--space-lg) 0;
+  max-width: 600px;
+  cursor: pointer;
+  overflow: hidden;
+  opacity: 0;
+  transition: opacity var(--transition-base);
+}
+
+.projects-scrollbar--visible {
+  opacity: 1;
+}
+
+.projects-scrollbar-track {
+  position: absolute;
+  inset: 0;
+  background: var(--border);
+  border-radius: 0;
+}
+
+.projects-scrollbar-thumb {
+  position: absolute;
+  height: 100%;
+  background: var(--text-primary);
+  border-radius: 0;
+  cursor: grab;
+  transition: all var(--transition-base);
+  box-shadow: 0 0 8px rgba(61, 41, 20, 0.3);
+}
+
+.projects-scrollbar-thumb:hover {
+  background: var(--text-primary);
+  transform: scaleY(1.5);
+}
+
+.projects-scrollbar-thumb.dragging {
+  cursor: grabbing;
+  background: var(--text-primary);
+  border: 1px solid var(--text-primary);
+  transform: scaleY(1.8);
+}
+
+.projects-container.grabbing {
+  cursor: grabbing;
 }
 
 .drawer-project-card {
@@ -876,6 +932,32 @@ a, button, input, textarea, select, [role="button"], [onclick], .project-card, .
   .projects-header { margin-left: 5vw; margin-top: 6vh; max-width: 90vw; }
   .projects-title { font-size: clamp(2.5rem, 12vw, 5rem); }
   .drawer-project-card { flex: 0 0 250px; min-width: 250px; max-width: 250px; }
+  
+  /* Hide custom scrollbar on mobile, use native scrolling */
+  .projects-scrollbar {
+    display: none;
+  }
+  
+  .projects-container {
+    scroll-snap-type: x mandatory;
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+    -ms-overflow-style: auto;
+  }
+  
+  .projects-container::-webkit-scrollbar {
+    display: block;
+    height: 3px;
+  }
+  
+  .projects-container::-webkit-scrollbar-track {
+    background: var(--surface);
+  }
+  
+  .projects-container::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+  }
   
   .experience-header { margin-left: 5vw; margin-top: 10vh; max-width: 90vw; }
   .experience-title { font-size: clamp(2.5rem, 12vw, 5rem); }
