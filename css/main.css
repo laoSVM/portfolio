@@ -572,6 +572,61 @@ a, button, input, textarea, select, [role="button"], [onclick], .project-card, .
   max-width: 60vw;
 }
 
+/* Productivity Tools Section */
+.hero-tools {
+  margin-top: var(--space-lg);
+  display: flex;
+  align-items: center;
+  gap: var(--space-md);
+}
+
+.tools-label {
+  font-size: var(--text-sm);
+  color: var(--text-muted);
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.tools-icons {
+  display: flex;
+  gap: var(--space-sm);
+}
+
+.tool-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base);
+  border: 1px solid var(--border);
+}
+
+.tool-link:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-light);
+}
+
+.tool-link:focus {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.tool-icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  transition: transform var(--transition-base);
+}
+
+.tool-link:hover .tool-icon {
+  transform: scale(1.1);
+}
+
 /* About section specific styles */
 .about-container {
   display: flex;
@@ -928,6 +983,9 @@ a, button, input, textarea, select, [role="button"], [onclick], .project-card, .
   .about-title { font-size: clamp(2.5rem, 12vw, 5rem); }
   .about-stats { flex-direction: column; gap: var(--space-md); }
   .stat-card { min-width: auto; }
+  
+  .hero-tools { flex-direction: column; align-items: flex-start; gap: var(--space-sm); margin-top: var(--space-md); }
+  .tools-icons { gap: var(--space-xs); }
   
   .projects-header { margin-left: 5vw; margin-top: 6vh; max-width: 90vw; }
   .projects-title { font-size: clamp(2.5rem, 12vw, 5rem); }
